@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 const {User} = require('../models');
 
 exports.register = async (req, res) => {
+  if (process.env.ALLOW_REGISTER !== 'true') {
+    return res.status(403).json({ message: '注册已关闭' });
+  }
+
+  // ...下面原来的注册逻辑不动
+exports.register = async (req, res) => {
     try {
         const {email,password} = req.body;
         if (!email || !password) {
